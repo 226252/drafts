@@ -38,7 +38,7 @@ void stateSwitcher(uint8_t wichState){
 double openCloseTime(uint16_t absoluteError){ //można poszerzyć funkcje o współczynniki funkcji jako parametry  
 	double t;
 	t=0.02*absoluteError - 0.21;
-	cout << "openCloseTime" << endl;
+	cout << "openCloseTime: ";
 	cout << t << endl;
 	return t;
 }
@@ -46,7 +46,7 @@ double openCloseTime(uint16_t absoluteError){ //można poszerzyć funkcje o wsp�
 double idleTime(uint16_t absoluteError){ // to samo co wyżej
 	double t;
 	t=1777.35 * pow(absoluteError,2) -0.89;
-	cout << "idleTime" << endl;
+	cout << "idleTime: ";
 	cout << t << endl;
 	return t;
 }
@@ -55,14 +55,14 @@ double idleTime(uint16_t absoluteError){ // to samo co wyżej
 
 int main()
 {
-    switchState = 1; //zainicjowac zmienna
+    switchState = 1; //inicjalizacja stanu
 	while(1){
 		
 		if(!isCycleStarted){
 			
 			switch(switchState){
 				case checkError:
-					cout <<	"error: ";
+					cout <<	"enter error value: ";
 					cin >> error;
 					//error=SP-PV;
 					switchState=setCycle;
@@ -86,7 +86,7 @@ int main()
 				
 				case idle:
 					//stan bezczynnosci nic tutaj nie robi i sie nie meczy
-					cout  << "jestem bezczynny" << endl; 
+					cout  << "Idle state" << endl; 
 					switchState=1;
 					break;
 			}
