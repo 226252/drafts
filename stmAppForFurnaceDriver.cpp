@@ -8,9 +8,9 @@ static uint16_t SP=400; //temp. zadana
 static uint16_t PV; //temp. aktualna
 static int16_t error; //uchyb  
 static bool isCycleStarted; //jakas flaga by wiedziec czy juz jest automat włączony
-#define checkError 1
-#define setCycle 2
-#define idle 3
+#define checkError 1 //stan w którym sprawdzony jest uchyb
+#define setCycle 2 //stan w którym wywoływane są funkcje otwierania/zamykania jowent
+#define idle 3 //stan bezczynnosci
 
 
 void openActuator(uint16_t openTime, uint16_t idleTime){
@@ -23,7 +23,7 @@ void openActuator(uint16_t openTime, uint16_t idleTime){
 void closeActuator(uint16_t closeTime, uint16_t idleTime){
 	//stan wysoki na pin zamykania
 	//wywolaj funkcje resetActuatorsPins() po closeTime 
-	//wywolaj funkcje zmiana witchState po closeTime+idleTime
+	//wywolaj funkcje zmiana switchState po closeTime+idleTime
 	switchState=idle;
 }
 
