@@ -14,7 +14,7 @@ class Actuator
 
 public:
 	Actuator(uint8_t pinNumber);
-	~Actuator();
+	//~Actuator();
 	uint8_t getCurrentState();
 	void openActuator(uint16_t openTime, uint16_t idleTime);
 	void closeActuator(uint16_t closeTime, uint16_t idleTime);
