@@ -1,16 +1,14 @@
 #include <iostream>
 #include <fstream>
-#include "../inc/ActuatorControllerLogic.hpp"
-#include "../inc/Actuator.hpp"
-using namespace std;
+#include "../inc/simpleCombustion.hpp"
 
 int main(){
 	uint16_t SP, PV;
 	int16_t error;
-	uint8_t pinNumber=1;
-	Actuator j1(pinNumber); 
-	outputHolder oH;
-
+	FakeActuator j1(3,6); 
+	simpleCombustion process1(j1);
+	
+	j1.resetPins();
 	SP=300;
 	ifstream dataFile;
 	ofstream outputFile;
@@ -20,8 +18,8 @@ int main(){
 	while (!dataFile.eof()){
 		dataFile >> PV;
 		error=SP-PV;
-		oH=logic(j1,error);
-		outputFile << error << ';' << oH.onTime << ';' << oH.offTime <<'\n';
+		process1.execute(error,true);
+		outputFile << error << ';' << process1.getOpenCloseTime() << ';' << process1.getIdleTime() <<'\n';
 	}
 	return 0;
 }

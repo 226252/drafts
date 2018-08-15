@@ -1,6 +1,7 @@
 #ifndef Actuator_HPP
 #define Actuator_HPP
 
+#include <iostream>
 #include <stdint.h>
 #define Idle 1
 #define OpeningCycle 2
@@ -8,55 +9,52 @@
 
 class Actuator
 {
-	uint8_t currentState;
-	uint8_t pinNumber;
-	void changeState(uint8_t whichState);
+	int currentState;
+	int pinNumberOpening;
+	int pinNumberClosing;
+	void changeState(int whichState);
+	friend class FakeActuator;
 
 public:
-	Actuator(uint8_t pinNumber);
-	//~Actuator();
+	
+	Actuator(int pinNumberOpening_, int pinNumberClosing_);
 	uint8_t getCurrentState();
-	void openActuator(uint16_t openTime, uint16_t idleTime);
-	void closeActuator(uint16_t closeTime, uint16_t idleTime);
-	void resetActuatorsPin();
-
+	virtual void open();
+	virtual void close();
+	virtual void resetPins();
 };
 // end of class
-void Actuator::changeState(uint8_t whichState){
+void Actuator::changeState(int whichState){
 	this->currentState=whichState;
 }
 //
-Actuator::Actuator(uint8_t pinNumber){
-	this->currentState = Idle;
-	this->pinNumber = pinNumber;
-}
+Actuator::Actuator(int pinNumberOpening_, int pinNumberClosing_)
+	: currentState(Idle),
+	pinNumberOpening(pinNumberOpening_),
+	pinNumberClosing(pinNumberClosing_)
+{}
 //
 uint8_t Actuator::getCurrentState(){
 	return currentState;
 }
 //
-void Actuator::openActuator(uint16_t openTime, uint16_t idleTime){
+void Actuator::open(){
 	if(currentState==Idle){
 		changeState(OpeningCycle);
 		//set the relay pin (opening) to HIGH
-		//call resetActuatorsPin after the openTime
-		//call changeState after openTime+idleTime
-		changeState(Idle); //only for test purpose
-	}		
+	}
 }
 //
-void Actuator::closeActuator(uint16_t closeTime, uint16_t idleTime){
+void Actuator::close(){
 	if(currentState==Idle){
 		changeState(ClosingCycle);
 		//set the relay pin (closing) to HIGH
-		//call resetActuatorsPin after the closeTime
-		//call changeState after closeTime+idleTime
-		changeState(Idle); //only for test purpose
 	}
 }
 //	
-void Actuator::resetActuatorsPin(){
-	//here goes code for reseting pins connected with relay
+void Actuator::resetPins(){
+	changeState(Idle);
+	//set both pins to LOW
 }
 
 #endif
