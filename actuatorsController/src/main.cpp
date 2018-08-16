@@ -1,13 +1,17 @@
 #include <iostream>
 #include <fstream>
+#include <math.h> 
 #include "../inc/simpleCombustion.hpp"
 
+using namespace std;
+	
 int main(){
 	uint16_t SP, PV;
 	int16_t error;
 	FakeActuator j1(3,6); 
-	simpleCombustion process1(j1);
 	
+	simpleCombustion::initialize(j1);
+
 	j1.resetPins();
 	SP=300;
 	ifstream dataFile;
@@ -18,8 +22,8 @@ int main(){
 	while (!dataFile.eof()){
 		dataFile >> PV;
 		error=SP-PV;
-		process1.execute(error,true);
-		outputFile << error << ';' << process1.getOpenCloseTime() << ';' << process1.getIdleTime() <<'\n';
+		simpleCombustion::execute(error,true);
+		outputFile << error << ';' << simpleCombustion::getOpenCloseTime() << ';' << simpleCombustion::getIdleTime() <<'\n';
 	}
 	return 0;
 }
