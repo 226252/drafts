@@ -28,7 +28,7 @@ void simpleCombustion::calculateCycleTime(int16_t absoluteError){
 	openCloseTime=0.02*absoluteError - 0.21;
 	if(openCloseTime<0)	openCloseTime=0;
 
-	idleTime=1777.35*absoluteError - 0.89;
+	idleTime=1777.35*pow(absoluteError, -0.89);
 	if(idleTime<0)	idleTime=0;
 	
 }
